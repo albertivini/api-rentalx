@@ -31,6 +31,9 @@ CMD ["npm", "run", "dev"]
 ## Para ver containers ativos: 
     ## docker ps
 
+## Para ver todos os containers:
+    ## docker ps -a
+
 ## Para acessar containers ativos:
     ## docker exec -it "nome do container (não é o nome da imagem)" bash
 

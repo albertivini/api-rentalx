@@ -1,11 +1,42 @@
 # versão do docker-compose
 version: "3.7"
 
+
 # inicio da orquestração
 services:
+
+  # container do banco de dados
+  # nome do serviço
+  database_ignite:
+
+    # imagem do container no dockerhub
+    image: postgres
+
+    # nome do container
+    container_name: database_ignite
+
+    # política para reiniciar o container sempre que ele for parado
+    restart: always
+
+    # mapeando a porta do container com a do pc 
+    ports: 
+      - 5432:5432
+
+    # variáveis de ambiente que serão passadas para o container
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=ignite
+      - POSTGRES_DB=rentx
+    
+    # seria o workdir do container, . é a pasta atual : é pra onde os arquivos vão dentro do container
+    volumes: 
+      - pgdata:/data/postgres
+    
+    
+
+  # aplicação feita pelo dockerfile
   # nome do serviço
   app:
-
     # comando de buildar o docker usando os arquivos q estão no path atual
     build: .
 
@@ -16,14 +47,48 @@ services:
     ports: 
       - 3333:3333   
 
-    # seria o workdir do cntainer, . é a pasta atual : é pra onde os arquivos vão dentro do container
+    # seria o workdir do container, . é a pasta atual : é pra onde os arquivos vão dentro do container
     volumes:
       - .:/usr/app 
+    
+    # criando ligação entre a aplicação e o banco de dados
+    links:
+      - database_ignite
+    
+    # criando a dependencia entre a aplicação e o banco
+    depends_on: 
+      - database_ignite
+    
 
 
-## Para executar o docker-compose:
+## criando um volume local com as informações do posgres que ficam compartilhadas com o workdir do container
+volumes:
+  pgdata:
+    ## caso haja necessidade de passar um caminho externo é possivel utilizar "external: true"
+    driver: local
+
+## Para subir o docker-compose:
   ## docker-compose up -d
   ## flag -d serve para ele rodar em background
 
 ## Para acompanhar o container:
   ## docker logs "nome do container" -f
+
+## Para parar o docker-compose:
+  ## docker-compose stop
+
+## Para remover o docker-compose:
+  ## docker-compose down
+
+## Para iniciar o docker-compose depois que os containers já subiram:
+  ## docker-compose start
+
+## Para forçar uma recriação do docker-compose:
+  ## docker-compose up --force-recreate
+
+## Para ver o ip do container:
+  ## docker exec "nome do container" cat /etc/hosts  
+
+## Para inspecionar o ip do container de uma forma mais dificil:
+  ## docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "nome do container"
+
