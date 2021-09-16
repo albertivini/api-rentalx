@@ -9,10 +9,10 @@ export class CreateCategoryController {
 
         const createCategoryUseCase = container.resolve(CreateCategoryUseCase);
 
-        const category = await createCategoryUseCase.execute({
+        await createCategoryUseCase.execute({
             name,
             description,
         });
-        return res.status(201).json(category);
+        return res.status(201).send();
     }
 }
