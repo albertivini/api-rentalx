@@ -3,12 +3,15 @@ import {
     CreateDateColumn,
     Entity,
     JoinColumn,
+    JoinTable,
+    ManyToMany,
     ManyToOne,
     PrimaryColumn,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
 
 import { Category } from "./Category";
+import { Specification } from "./Specification";
 
 @Entity("cars")
 export class Car {
@@ -39,6 +42,14 @@ export class Car {
 
     @Column()
     category_id: string;
+
+    @ManyToMany(() => Specification)
+    @JoinTable({
+        name: "specification_cars",
+        joinColumn: { name: "car_id" },
+        inverseJoinColumn: { name: "specification_id" },
+    })
+    specifications: Specification[];
 
     @Column()
     available: boolean;
