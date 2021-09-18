@@ -1,6 +1,6 @@
 import { EntityRepository, getRepository, Repository } from "typeorm";
 
-import { ICreateCarDTO } from "../../../../dtos/ICreateCarDTO";
+import { ICreateCarDTO } from "../../../dtos/ICreateCarDTO";
 import { ICarsRepository } from "../../../repositories/ICarsRepository";
 import { Car } from "../entities/Car";
 
