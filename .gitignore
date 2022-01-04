@@ -2,3 +2,5 @@ node_modules
 tmp
 coverage
 .env
+ormconfig.json
+.vscode
