@@ -7,13 +7,13 @@ services:
 
   # container do banco de dados
   # nome do serviço
-  database_ignite:
+  database:
 
     # imagem do container no dockerhub
     image: postgres
 
     # nome do container
-    container_name: database_ignite
+    container_name: database
 
     # política para reiniciar o container sempre que ele for parado
     restart: always
