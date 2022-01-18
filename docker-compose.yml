@@ -32,32 +32,38 @@ services:
     volumes: 
       - pgdata:/data/postgres
     
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379
     
+
+
 
   # aplicação feita pelo dockerfile
   # nome do serviço
-  app:
-    # comando de buildar o docker usando os arquivos q estão no path atual
-    build: .
+  # app:
+  #   # comando de buildar o docker usando os arquivos q estão no path atual
+  #   build: .
 
-    # nome do container
-    container_name: rentx
+  #   # nome do container
+  #   container_name: rentx
 
-    # mapeando a porta do container com a do pc 
-    ports: 
-      - 3333:3333   
+  #   # mapeando a porta do container com a do pc 
+  #   ports: 
+  #     - 3333:3333   
 
-    # seria o workdir do container, . é a pasta atual : é pra onde os arquivos vão dentro do container
-    volumes:
-      - .:/usr/app 
+  #   # seria o workdir do container, . é a pasta atual : é pra onde os arquivos vão dentro do container
+  #   volumes:
+  #     - .:/usr/app 
     
-    # criando ligação entre a aplicação e o banco de dados
-    links:
-      - database_ignite
+  #   # criando ligação entre a aplicação e o banco de dados
+  #   links:
+  #     - database_ignite
     
-    # criando a dependencia entre a aplicação e o banco
-    depends_on: 
-      - database_ignite
+  #   # criando a dependencia entre a aplicação e o banco
+  #   depends_on: 
+  #     - database_ignite
     
 
 
